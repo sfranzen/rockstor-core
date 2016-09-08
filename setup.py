@@ -80,6 +80,7 @@ setup(
         'psycogreen == 1.0',
         'psutil == 3.3.0',
         'chardet == 2.3.0',
+        'django-npm == 1.0.0',
     ]
 
 )
