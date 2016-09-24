@@ -19,9 +19,80 @@
 */
 -->
 
-{% extends "base.html" %}
+<!-- {% extends "base.html" %} -->
 
-{% block content %}
+{% block body %}
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div id="navbar-brand">
+                <a href="#/home">
+                    <img class="img-responsive logo" src="/static/storageadmin/img/rockstorlogo-font2.png"/>
+                </a>
+            </div>
+        </div>
 
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div id="navbar-links"></div>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div id="appliance-breadcrumb">
+    <a id="appliance-name" href="#"></a>
+    <div id="local-time"><i class="fa fa-clock-o fa-inverse"></i>&nbsp;Local Time:&nbsp;<span/></div>
+    <a id="direct-shell" href="#shell"><i class="fa fa-desktop fa-inverse"></i>&nbsp;System Shell</a>
+    <div id="uptime"></div>
+    <div id="appliance-loadavg"></div>
+</div>
+
+<div id="wrapper1">
+    <div id="wrapper2">
+
+        <div id="loading-indicator" style="visibility:hidden"><img src="/static/storageadmin/img/ajax-loader.gif"/></div>
+        <div id="sidebar">
+            <div id="sidebar-inner">
+            </div>
+        </div>
+        <div id="content">
+            <div id="browsermsg" style="clear: both;"></div>
+            <div id="globalerrmsg"></div>
+
+            <div id="maincontent">
+                <!--Body content-->
+                {% block content %}{% endblock %}
+            </div>
+        </div> <!-- maincontent -->
+
+    </div> <!-- wrapper2 -->
+    <div id="footer"></div>
+</div> <!-- wrapper1 -->
+
+<div class="simple-overlay" id="global-err-overlay">
+    <div class="overlay-content"> </div>
+</div>
 {% endblock %}
 
+{% block scripts %}
+<script>
+    // Controls hamburger menu collapse after click
+    $(document).ready(function() {
+
+      $("body").click(function(event) {
+              // only do this if navigation is visible, otherwise you see jump in navigation while collapse() is called
+                if ($(".navbar-collapse").is(":visible") && $(".navbar-toggle").is(":visible") ) {
+                  $('.navbar-collapse').collapse('toggle');
+              }
+        });
+
+    });
+</script>
+{% endblock %}

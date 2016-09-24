@@ -1,0 +1,298 @@
+<!--
+/**
+* Copyright (c) 2012-2013 RockStor, Inc. <http://rockstor.com>
+* This file is part of RockStor.
+*
+* RockStor is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published
+* by the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version.
+*
+* RockStor is distributed in the hope that it will be useful, but
+* WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+* General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program. If not, see <http://www.gnu.org/licenses/>.
+*
+*/
+-->
+
+{% extends "base.html" %}
+
+{% block body %}
+<nav class="navbar navbar-pf-vertical">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a href="#home" class="navbar-brand">
+      <img class="navbar-brand-icon" style="max-height: 35px" src="/static/storageadmin/img/rockstorlogo-font2.png"/>
+    </a>
+  </div>
+
+  <nav class="collapse navbar-collapse">
+    <ul class="nav navbar-nav">
+      <li><a id="donate_nav" href="#" class="nav-item-iconic"><span class="fa fa-heart" style="color:#BA0707"></span> Donate</a></li>
+      <li><a href="http://shop.rockstor.com" target="_blank" class="nav-item-iconic"><span class="fa fa-shopping-cart" style="color:#E76545"></span> Shop</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li>
+        <div id="local-time" class="navbar-text" style="margin-top: 22px" title="System Time">
+          <i class="fa fa-clock-o fa-lg"></i> <span/>
+        </div>
+      </li>
+      <li class="dropdown">
+        <a class="dropdown-toggle nav-item-iconic" id="supportMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <span title="Support" class="fa pficon-help"></span>
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="supportMenu">
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">Community Forums</a></li>
+          <li><a href="#">Issue Tracker</a></li>
+          <li><a href="#">Team e-mail</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a class="dropdown-toggle nav-item-iconic" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <span id="user-name"></span>
+          <span title="Username" class="fa fa-power-off"></span>
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="userMenu">
+          <li><a id="logout_user" href="/logout_user">Logout</a></li>
+          <li><a id="shutdown" href="#shutdown">Shutdown</a></li>
+          <li><a id="reboot" href="#reboot">Reboot</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</nav> <!--/.navbar-->
+
+<div id="menu" class="nav-pf-vertical nav-pf-vertical-with-sub-menus nav-pf-persistent-secondary hide-nav-pf">
+  <ul class="list-group">
+    <li class="list-group-item">
+      <a>
+        <span class="fa fa-dashboard" data-toggle="tooltip" title="Dashboard"></span>
+        <span class="list-group-item-value">Dashboard</span>
+      </a>
+    </li>
+
+    <li class="list-group-item secondary-nav-item-pf" data-target="#storage-secondary">
+      <a>
+        <span class="glyphicon glyphicon-hdd" data-toggle="tooltip" title="Storage"></span>
+        <span class="list-group-item-value">Storage</span>
+      </a>
+      <div id="-secondary" class="nav-pf-secondary-nav">
+        <div class="nav-item-pf-header">
+          <a class="secondary-collapse-toggle-pf" data-toggle="collapse-secondary-nav"></a>
+          <span>Storage</span>
+        </div>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <a>
+              <span class="fa pficon-container-node"></span>
+              <span class="list-group-item-value">Disks</span>
+            </a>
+          </li>
+          <li class="list-group-item">
+            <a>
+              <span class="fa fa-database"></span>
+              <span class="list-group-item-value">Pools</span>
+            </a>
+          </li>
+          <li class="list-group-item">
+            <a>
+              <span class="fa pficon-folder-open"></span>
+              <span class="list-group-item-value">Shares</span>
+            </a>
+          </li>
+          <li class="list-group-item">
+            <a>
+              <span class="fa fa-camera"></span>
+              <span class="list-group-item-value">Snapshots</span>
+            </a>
+          </li>
+          <li class="divider"></li>
+          <li class="dropdown-header">
+              <span class="fa fa-exchange"></span> Replication
+          </li>
+          <li class="list-group-item">
+            <a>
+              <span class="fa fa-long-arrow-right"></span>
+              <span class="list-group-item-value">Send</span>
+            </a>
+          </li>
+          <li class="list-group-item">
+            <a>
+              <span class="fa fa-long-arrow-left"></span>
+              <span class="list-group-item-value">Receive</span>
+            </a>
+          </li>
+          <li class="divider"></li>
+          <li class="dropdown-header">
+              <span class="fa pficon-repository"></span>
+              <span>File Sharing</span>
+          </li>
+          <li class="list-group-item">
+            <a href="#nfs-exports">
+              <span class="fa fa-linux"></span>
+              <span class="list-group-item-value">NFS</span>
+            </a>
+          </li>
+          <li class="list-group-item">
+            <a href="#samba-exports">
+              <span class="fa fa-windows"></span>
+              <span class="list-group-item-value">Samba</span>
+            </a>
+          </li>
+          <li class="list-group-item">
+            <a href="#sftp">
+              <span class="fa fa-upload"></span>
+              <span class="list-group-item-value">SFTP</span>
+            </a>
+          </li>
+          <li class="list-group-item">
+            <a href="#afp">
+              <span class="fa fa-apple"></span>
+              <span class="list-group-item-value">AFP</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </li> <!-- /storage menu -->
+
+    <li class="list-group-item secondary-nav-item-pf" data-target="#system-secondary">
+      <a>
+        <span class="fa fa-cogs" data-toggle="tooltip" title="System"></span>
+        <span class="list-group-item-value">System</span>
+      </a>
+      <div id="-secondary" class="nav-pf-secondary-nav">
+        <div class="nav-item-pf-header">
+          <a class="secondary-collapse-toggle-pf" data-toggle="collapse-secondary-nav"></a>
+          <span>System</span>
+        </div>
+        <ul class="list-group">
+          <li class="dropdown-header">
+              <span class="glyphicon glyphicon-credit-card"></span> Identity
+          </li>
+          <li class="list-group-item">
+            <a>
+              <span class="fa fa-user"></span>
+              <span class="list-group-item-value">Users</span>
+            </a>
+          </li>
+          <li class="list-group-item">
+            <a>
+              <span class="fa fa-group"></span>
+              <span class="list-group-item-value">Groups</span>
+            </a>
+          </li>
+          <li class="list-group-item">
+            <a>
+              <span class="fa fa-key"></span>
+              <span class="list-group-item-value">Access Keys</span>
+            </a>
+          </li>
+
+          <li class="divider"></li>
+          <li class="dropdown-header">
+              <span class="fa pficon-settings"></span> Configuration
+          </li>
+          <li class="list-group-item">
+            <a>
+              <span class="fa fa-cog"></span>
+              <span class="list-group-item-value">Services</span>
+            </a>
+          </li>
+          <li class="list-group-item">
+            <a>
+              <span class="fa pficon-network"></span>
+              <span class="list-group-item-value">Network</span>
+            </a>
+          </li>
+          <li class="list-group-item">
+            <a>
+              <span class="fa fa-tasks"></span>
+              <span class="list-group-item-value">Scheduled Tasks</span>
+            </a>
+          </li>
+          <li class="list-group-item">
+            <a>
+              <span class="fa fa-arrow-circle-up"></span>
+              <span class="list-group-item-value">Software Updates</span>
+            </a>
+          </li>
+          <li class="list-group-item">
+            <a>
+              <span class="fa pficon-screen"></span>
+              <span class="list-group-item-value">Appliances</span>
+            </a>
+          </li>
+          <li class="list-group-item">
+            <a>
+              <span class="fa fa-certificate"></span>
+              <span class="list-group-item-value">SSL Certificate</span>
+            </a>
+          </li>
+          <li class="list-group-item">
+            <a>
+              <span class="fa pficon-save"></span>
+              <span class="list-group-item-value">Config Backups</span>
+            </a>
+          </li>
+          <li class="list-group-item">
+            <a>
+              <span class="fa fa-envelope"></span>
+              <span class="list-group-item-value">E-mail Alerts</span>
+            </a>
+          </li>
+          <li class="list-group-item">
+            <a>
+              <span class="fa pficon-history"></span>
+              <span class="list-group-item-value">Logs Manager</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </li> <!-- /system menu -->
+
+    <li class="list-group-item">
+      <a>
+        <span class="fa fa-puzzle-piece" data-toggle="tooltip" title="Rock-ons"></span>
+        <span class="list-group-item-value">Rock-ons</span>
+      </a>
+
+    </li>
+
+    <li class="list-group-item">
+      <a>
+        <span class="fa fa-terminal" data-toggle="tooltip" title="System Shell"></span>
+        <span class="list-group-item-value">System Shell</span>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<div id="browsermsg" style="clear: both;"></div>
+<div id="globalerrmsg"></div>
+
+<div id="maincontent">
+    <!--Body content-->
+    {% block content %}{% endblock %}
+</div>
+{% endblock body %}
+
+{% block scripts %}
+<script>
+$(document).ready(function() {
+  // Initialize the vertical navigation
+  $().setupVerticalNavigation(true);
+});
+</script>
+{% endblock %}

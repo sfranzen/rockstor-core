@@ -49,7 +49,7 @@ def login_submit(request):
                               context_instance=RequestContext(request))
 
 
-def home(request):
+def home(request, version='1'):
     current_appliance = None
     try:
         current_appliance = Appliance.objects.get(current_appliance=True)
@@ -70,7 +70,8 @@ def home(request):
         'update_channel': update_channel
     }
     if request.user.is_authenticated():
-        return render_to_response('index.html',
+        target = 'index2.html' if version == '2' else 'index.html'
+        return render_to_response(target,
                                   context,
                                   context_instance=RequestContext(request))
     else:

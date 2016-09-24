@@ -52,6 +52,8 @@ urlpatterns = patterns('',
                            'storageadmin.views.login_submit'),
                        url(r'^logout_user$', 'storageadmin.views.logout_user'),
                        url(r'^home$', 'storageadmin.views.home', name='home'),
+                       url(r'^v2$', 'storageadmin.views.home',
+                           {'version': '2'}),
                        url(r'^setup_user$', SetupUserView.as_view()),
                        url(r'^site_media/(?P<path>.*)$',
                            'django.views.static.serve',
@@ -119,7 +121,7 @@ urlpatterns = patterns('',
                        url(r'^api/email$', EmailClientView.as_view()),
                        url(r'^api/email/(?P<command>.*)$', EmailClientView.as_view()),
 
-                       #update subscription
+                      #update subscription
                        (r'^api/update-subscriptions',
                         include('storageadmin.urls.update_subscription')),
 )
