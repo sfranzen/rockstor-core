@@ -1,7 +1,6 @@
 {{#if logged_in }}
 <ul class="nav navbar-nav">
   <li><a id="home_nav" href="#home">Dashboard</a></li>
-  <li><a id="home_nav2" href="v2#dashboard">Dashboard v2</a></li>
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Storage <i class="fa fa-caret-down"></i></a>
     <ul class="dropdown-menu">
@@ -46,6 +45,14 @@
   </li>
 
   <li><a id="rockons_nav" href="#rockons">Rock-ons</a></li>
+
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">New Features <i class="fa fa-caret-down"></i></a>
+    <ul class="dropdown-menu">
+      <li><a href="new#dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+    </ul>
+  </li>
+
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
       Support
@@ -75,7 +82,7 @@
       <li><a id="reboot" href="#reboot">Reboot</a></li>
     </ul>
 </ul>
-<ul class="dropdown-menu" style="left: -40px;>
+<ul class="dropdown-menu" style="left: -40px;">
   <li><a id="logout_user" href="/logout_user">Logout</a></li>
   <li><a id="shutdown" href="#shutdown">Shutdown</a></li>
   <li><a id="reboot" href="#reboot">Reboot</a></li>
