@@ -1,0 +1,30 @@
+{{!<script>
+/*
+ * Copyright (c) 2016 RockStor, Inc. <http://rockstor.com>
+ * This file is part of RockStor.
+ *
+ * RockStor is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published
+ * by the Free Software Foundation; either version 2 of the License,
+ * or (at your option) any later version.
+ *
+ * RockStor is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+</script>}}
+
+{{! A skeleton template for PatternFly dashboard cards. }}
+<div class="card-pf">
+    <div class="card-pf-heading">
+    {{#if icon}}<span class="{{icon}}"></span>{{/if}}
+    {{#if count}}<span class="card-pf-aggregate-status-count">{{count}}</span>{{/if}}
+    {{#if title}}<h2 class="card-pf-title">{{title}}</h2>{{/if}}
+    </div>
+    <div class="card-pf-body"></div>
+</div>

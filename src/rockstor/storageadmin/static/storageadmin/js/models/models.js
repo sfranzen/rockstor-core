@@ -107,7 +107,8 @@ var ShareCollection = RockStorPaginatedCollection.extend({
         var p = this.constructor.__super__.extraParams.apply(this, arguments);
         p['sortby'] = 'name';
         return p;
-    }
+    },
+    comparator: function(share) { return -share.get('rusage'); }
 });
 
 var Image = Backbone.Model.extend({
@@ -706,4 +707,40 @@ var UpdateSubscription = Backbone.Model.extend({
 var UpdateSubscriptionCollection = RockStorPaginatedCollection.extend({
     model: UpdateSubscription,
     baseUrl: '/api/update-subscriptions'
+});
+
+/* Frontend convenience models */
+// Chart data: for charts that render data all at once
+var ChartData = Backbone.Model.extend({
+    defaults: {
+        name: '',
+        labels: [],
+        values: [],
+        unit: 'kB'
+    }
+});
+
+// Progress data: for progress bars rendered separately as html
+var ProgressBar = Backbone.Model.extend({
+    defaults: {
+        name: '',
+        unit: 'kB',
+        // Both total and progress are defined in the given units
+        total: 1,
+        progress: 0,
+    },
+
+    // Compute additional required attributes
+    initialize: function(options) {
+        var pProgress =  (100 * options.progress / options.total).toFixed(1);
+        this.set({
+            remaining: options.total - options.progress,
+            pProgress: pProgress,
+            pRemaining: 100 - pProgress
+        });
+    }
+});
+
+var ProgressData = Backbone.Collection.extend({
+    model: ProgressBar
 });

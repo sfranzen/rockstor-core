@@ -120,6 +120,7 @@ NPM_STATIC_FILES_PREFIX = 'node_modules'
 NPM_FILE_PATTERNS = {
     'bootstrap': ['dist/*'],
     'bootstrap-switch': ['dist/*'],
+    'c3': ['*.js'],
     'd3': ['*.js'],
     'datatables': ['media/*'],
     'jquery': ['dist/*'],
@@ -216,9 +217,9 @@ PIPELINE_JS = {
             'storageadmin/js/d3.slider2.js',
             'storageadmin/js/models/models.js',
             'storageadmin/js/views/common/*.js',
+            'storageadmin/js/views/**/**/*.js',
+            'storageadmin/js/views/**/*.js',
             'storageadmin/js/views/*.js',
-            'storageadmin/js/views/pool/**/*.js',
-            'storageadmin/js/views/dashboard/*.js',
             ),
         'output_filename': 'storageadmin/js/storageadmin.js'
         },
