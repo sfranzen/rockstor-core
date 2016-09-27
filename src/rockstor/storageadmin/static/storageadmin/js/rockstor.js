@@ -401,6 +401,34 @@ function checkBrowser() {
     RockStorGlobals.browserChecked = true;
 }
 
+function formatDuration(seconds) {
+    var n = parseInt(seconds);
+    var mins = Math.floor(n/60) % 60;
+    var hrs = Math.floor(n / (60*60)) % 24;
+    var days = Math.floor(n / (60*60*24)) % 365;
+    var yrs = Math.floor(n / (60*60*24*365));
+    var str = '';
+    if (yrs == 1) {
+        str += yrs + ' year, ';
+    } else if (yrs > 1) {
+        str += yrs + ' years, ';
+    }
+    if (days == 1) {
+        str += days + ' day, ';
+    } else if (days > 1) {
+        str += days + ' days, ';
+    }
+    if (hrs < 10) {
+        str += '0';
+    }
+    str += hrs + ':';
+    if (mins < 10) {
+        str += '0';
+    }
+    str += mins;
+    return str;
+}
+
 RockStorProbeMap = [];
 RockStorGlobals = {
     navbarLoaded: false,
