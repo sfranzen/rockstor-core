@@ -24,32 +24,66 @@
  *
  */
 
+var HostInfoView = Backbone.View.extend({
+    tagName: 'dl',
+
+    className: 'dl-horizontal',
+
+    initialize: function() {
+        this.template = window.JST.dashboard_cards_host_info;
+    },
+
+    render: function() {
+        this.$el.append(this.template());
+        return this;
+    }
+});
+
 var HostInfoCard = DashboardCard.extend({
+    title: 'System Details',
+
     collection: new ApplianceCollection(),
 
     initialize: function() {
         DashboardCard.prototype.initialize.call(this);
-        this.content = window.JST.dashboard_cards_host_info;
-        this.collection.on('all', this.renderData, this);
-        this.collection.fetch();
-        _.bindAll(this, 'renderData');
+        this.bodyContent = new HostInfoView();
+        _.bindAll(this, 'renderData', 'updateUptime', 'updateVersion', 'updateKernelVersion');
     },
 
     render: function() {
-        this.$el.html(this.template({title: "System Details"}));
-        this.$('.card-pf-body').html(this.content());
+        DashboardCard.prototype.render.call(this);
+        this.bodyContent.render();
+        this.collection.fetch({success: this.renderData});
+        RockStorSocket.sysinfo.on('sysinfo:uptime', this.updateUptime);
+        RockStorSocket.sysinfo.on('sysinfo:software-update', this.updateVersion);
+        RockStorSocket.sysinfo.on('sysinfo:kernel_info', this.updateKernelVersion);
         return this;
     },
 
-    renderData: function(model) {
-        var model = this.collection.find(function(appliance) {
-            return appliance.get('current_appliance');
+    renderData: function(appliances) {
+        current = appliances.find(function(app) {
+            return app.get('current_appliance');
         });
-
-        if (model.get('current_appliance')) {
-            this.$('#hostname').text(model.get('hostname'));
-            this.$('#ip').text(model.get('ip'));
+        if (current) {
+            this.$('#hostname').text(current.get('hostname'));
+            this.$('#ip').text(current.get('ip'));
         }
         return this;
     },
+
+    updateUptime: function(data) {
+        this.$('#up-time').text(formatDuration(data.data));
+    },
+
+    // TODO: add link to rockstor update page
+    updateVersion: function(data) {
+        this.$('#version').text(data[0]);
+        if (data[0] !== data[1]) {
+            this.$('#version').append(' <span class="fa fa-arrow-circle-o-up"></span>');
+        }
+    },
+
+    updateKernelVersion: function(data) {
+        this.$('#kernel').text(data.data);
+    }
 });
