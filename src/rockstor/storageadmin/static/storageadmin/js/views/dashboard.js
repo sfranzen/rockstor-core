@@ -25,6 +25,8 @@
  */
 
 var DashboardLayoutView = Backbone.View.extend({
+    className: 'container-cards-pf',
+
     rows: [],
 
     initialize: function() {
@@ -44,14 +46,6 @@ var DashboardLayoutView = Backbone.View.extend({
     },
 
     renderRow: function(row) {
-        this.$('.container-cards-pf').append(row.render().el);
-    },
-
-    // Match the heights in each row of cards
-    matchHeight: function() {
-        this.$(".row-cards-pf > [class*='col'] > .card-pf .card-pf-title").matchHeight();
-        this.$(".row-cards-pf > [class*='col'] > .card-pf > .card-pf-body").matchHeight();
-        this.$(".row-cards-pf > [class*='col'] > .card-pf > .card-pf-footer").matchHeight();
-        this.$(".row-cards-pf > [class*='col'] > .card-pf").matchHeight();
-    },
+        this.$el.append(row.render().el);
+    }
 });
