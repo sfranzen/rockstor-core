@@ -54,6 +54,7 @@ var TopSharesCard = DashboardCard.extend({
                                 {exponent: exponent, output: 'object'}).value;
             }),
         });
+        this.trigger('heightChanged');
         return this;
     }
 });

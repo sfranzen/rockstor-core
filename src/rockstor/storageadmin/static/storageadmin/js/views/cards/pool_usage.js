@@ -46,6 +46,7 @@ var PoolUsageCard = DashboardCard.extend({
 
     update: function(pools) {
         pools.each(this.addModel, this);
+        this.trigger('heightChanged');
     },
 
     addModel: function(pool) {

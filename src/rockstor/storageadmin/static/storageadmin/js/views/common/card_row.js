@@ -36,8 +36,17 @@ var CardRow = Backbone.View.extend({
     render: function() {
         _.each(this.cards, function (card) {
             this.$el.append(card.render().el);
+            card.on('heightChanged', this.matchHeight, this);
         }, this);
         return this;
     },
+
+    // Match the heights in each row of cards
+    matchHeight: function(event) {
+        this.$("[class*='col'] > .card-pf .card-pf-title").matchHeight();
+        this.$("[class*='col'] > .card-pf > .card-pf-body").matchHeight();
+        this.$("[class*='col'] > .card-pf > .card-pf-footer").matchHeight();
+        this.$("[class*='col'] > .card-pf").matchHeight();
+    }
 });
 
