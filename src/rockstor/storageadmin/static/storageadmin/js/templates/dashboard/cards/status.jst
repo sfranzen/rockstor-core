@@ -22,9 +22,17 @@
 {{! A skeleton template for PatternFly dashboard cards. }}
 {{#with view}}
 <div class="card-pf">
-    <div class="card-pf-heading">
-        <h2 class="card-pf-title">{{title}}</h2>
+    <h2 class="card-pf-title">
+        <span class="{{icon}}"></span>
+        <span class="card-pf-aggregate-status-count"></span> {{title}}
+    </h2>
+    <div class="card-pf-body">
+        <p class="card-pf-aggregate-status-notifications">
+            <span class="card-pf-aggregate-status-notification">
+                <span class="pficon pficon-ok"></span>
+            </span>
+        </p>
     </div>
-    <div class="card-pf-body"></div>
 </div>
 {{/with}}
+

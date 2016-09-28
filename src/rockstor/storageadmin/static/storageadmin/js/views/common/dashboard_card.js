@@ -27,19 +27,44 @@
 var DashboardCard = Backbone.View.extend({
     className: 'col-xs-12 col-md-6 col-lg-3',
 
-    // Type should be default or status
-    type: 'default',
-
-    initialize: function() {
+    initialize: function(options) {
+        _.extend(this, options);
         this.template = window.JST.dashboard_cards_base;
     },
 
     render: function() {
-        this.$el.html(this.template({title: this.title}));
-        if (this.type == 'status') {
-            this.$('.card-pf').addClass('card-pf-aggregate-status card-pf-accented');
-        }
-        this.$('.card-pf-body').append(this.bodyContent.el);
+        this.$el.html(this.template({view: this}));
+        if (this.bodyContent)
+            this.$('.card-pf-body').html(this.bodyContent.el);
+        return this;
+    }
+});
+
+/* The aggregate status card is smaller than a regular dashboard card and is
+ * intended to display a few details and/or actions associated with a collection
+ * of objects.
+ */
+var StatusCard = DashboardCard.extend({
+    className: 'col-xs-6 col-md-3 col-lg-2',
+
+    miniCard: false,
+
+    initialize: function(options) {
+        DashboardCard.prototype.initialize.call(this, options);
+        this.template = window.JST.dashboard_cards_status;
+        this.collection.on('reset', this.renderData, this);
+    },
+
+    render: function() {
+        DashboardCard.prototype.render.call(this);
+        this.$('.card-pf').addClass('card-pf-aggregate-status card-pf-accented');
+        if (this.miniCard)
+            this.$('.card-pf').addClass('card-pf-aggregate-status-mini');
+        this.collection.fetch();
         return this;
     },
+
+    renderData: function(collection) {
+        this.$('.card-pf-aggregate-status-count').text(collection.length);
+    }
 });

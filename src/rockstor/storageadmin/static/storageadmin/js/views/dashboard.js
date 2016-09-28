@@ -32,6 +32,23 @@ var DashboardLayoutView = Backbone.View.extend({
     initialize: function() {
         this.template = window.JST.dashboard_dashboard;
         this.rows.push(new CardRow({cards: [
+            new StatusCard({
+                title: 'Disks',
+                collection: new DiskCollection(),
+                icon: 'pficon pficon-container-node'
+            }),
+            new StatusCard({
+                title: 'Pools',
+                collection: new PoolCollection(),
+                icon: 'pficon pficon-volume'
+            }),
+            new StatusCard({
+                title: 'Shares',
+                collection: new ShareCollection(),
+                icon: 'pficon pficon-folder-open'
+            })
+        ]}));
+        this.rows.push(new CardRow({cards: [
             new HostInfoCard(),
             new PoolUsageCard(),
             new TopSharesCard(),
