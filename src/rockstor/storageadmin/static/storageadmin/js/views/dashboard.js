@@ -24,14 +24,13 @@
  *
  */
 
-var DashboardLayoutView = Backbone.View.extend({
+var DashboardLayoutView = RockstorLayoutView.extend({
     className: 'container-cards-pf',
-
-    rows: [],
 
     initialize: function() {
         this.template = window.JST.dashboard_dashboard;
-        this.rows.push(new CardRow({cards: [
+        rows = [];
+        rows.push(new CardRow({cards: [
             new StatusCard({
                 title: 'Disks',
                 collection: new DiskCollection(),
@@ -48,11 +47,12 @@ var DashboardLayoutView = Backbone.View.extend({
                 icon: 'pficon pficon-folder-open'
             })
         ]}));
-        this.rows.push(new CardRow({cards: [
+        rows.push(new CardRow({cards: [
             new HostInfoCard(),
             new PoolUsageCard(),
             new TopSharesCard(),
         ]}));
+        this.rows = rows;
     },
 
     render: function() {
@@ -64,5 +64,5 @@ var DashboardLayoutView = Backbone.View.extend({
 
     renderRow: function(row) {
         this.$el.append(row.render().el);
-    }
+    },
 });

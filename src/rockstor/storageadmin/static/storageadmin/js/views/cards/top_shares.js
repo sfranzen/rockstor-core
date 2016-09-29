@@ -29,10 +29,9 @@ var TopSharesCard = DashboardCard.extend({
 
     collection: new ShareCollection(),
 
-    model: new ChartData({name: 'Shares'}),
-
     initialize: function() {
         DashboardCard.prototype.initialize.call(this);
+        this.model = new ChartData({name: 'Shares'});
         this.bodyContent = new HorizontalBarChart({model: this.model});
         _.bindAll(this, 'updateModel');
     },

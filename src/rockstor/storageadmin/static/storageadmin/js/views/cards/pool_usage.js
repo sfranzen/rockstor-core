@@ -29,24 +29,21 @@ var PoolUsageCard = DashboardCard.extend({
 
     collection: new PoolCollection(),
 
-    data: new ProgressData(),
-
     initialize: function() {
         DashboardCard.prototype.initialize.call(this);
+        this.data = new ProgressData(),
         this.bodyContent = new ProgressBarChart({collection: this.data});
-        this.collection.on('reset', this.update, this);
-        this.collection.on('remove', this.removeModel, this);
+        _.bindAll(this, 'update');
     },
 
     render: function() {
         DashboardCard.prototype.render.call(this);
-        this.collection.fetch();
+        this.collection.fetch({success: this.update});
         return this;
     },
 
-    update: function(pools) {
-        pools.each(this.addModel, this);
-        this.trigger('heightChanged');
+    update: function(collection) {
+        collection.each(this.addModel, this);
     },
 
     addModel: function(pool) {
@@ -61,11 +58,6 @@ var PoolUsageCard = DashboardCard.extend({
             total: size.value,
             progress: used.value
         });
-    },
-
-    removeModel: function(pool) {
-        this.data.destroy(
-            this.data.where({name: pool.get('name')})
-        );
-    },
+        this.trigger('heightChanged');
+    }
 });

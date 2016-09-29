@@ -27,8 +27,6 @@
 var CardRow = Backbone.View.extend({
     className: 'row row-cards-pf',
 
-    cards: [],
-
     initialize: function(options) {
         this.cards = options.cards;
     },
@@ -42,7 +40,7 @@ var CardRow = Backbone.View.extend({
     },
 
     // Match the heights in each row of cards
-    matchHeight: function(event) {
+    matchHeight: function() {
         this.$("[class*='col'] > .card-pf .card-pf-title").matchHeight();
         this.$("[class*='col'] > .card-pf > .card-pf-body").matchHeight();
         this.$("[class*='col'] > .card-pf > .card-pf-footer").matchHeight();
